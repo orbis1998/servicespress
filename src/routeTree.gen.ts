@@ -11,7 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LivreurRouteRouteImport } from './routes/livreur/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LivreurIndexRouteImport } from './routes/livreur/index'
+import { Route as LivreurStockRouteImport } from './routes/livreur/stock'
+import { Route as LivreurLivraisonsRouteImport } from './routes/livreur/livraisons'
+import { Route as LivreurBadgeRouteImport } from './routes/livreur/badge'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -23,38 +28,102 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LivreurRouteRoute = LivreurRouteRouteImport.update({
+  id: '/livreur',
+  path: '/livreur',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LivreurIndexRoute = LivreurIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LivreurRouteRoute,
+} as any)
+const LivreurStockRoute = LivreurStockRouteImport.update({
+  id: '/stock',
+  path: '/stock',
+  getParentRoute: () => LivreurRouteRoute,
+} as any)
+const LivreurLivraisonsRoute = LivreurLivraisonsRouteImport.update({
+  id: '/livraisons',
+  path: '/livraisons',
+  getParentRoute: () => LivreurRouteRoute,
+} as any)
+const LivreurBadgeRoute = LivreurBadgeRouteImport.update({
+  id: '/badge',
+  path: '/badge',
+  getParentRoute: () => LivreurRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/livreur': typeof LivreurRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/livreur/badge': typeof LivreurBadgeRoute
+  '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/stock': typeof LivreurStockRoute
+  '/livreur/': typeof LivreurIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/livreur/badge': typeof LivreurBadgeRoute
+  '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/stock': typeof LivreurStockRoute
+  '/livreur': typeof LivreurIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/livreur': typeof LivreurRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/livreur/badge': typeof LivreurBadgeRoute
+  '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/stock': typeof LivreurStockRoute
+  '/livreur/': typeof LivreurIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/livreur'
+    | '/login'
+    | '/register'
+    | '/livreur/badge'
+    | '/livreur/livraisons'
+    | '/livreur/stock'
+    | '/livreur/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/livreur/badge'
+    | '/livreur/livraisons'
+    | '/livreur/stock'
+    | '/livreur'
+  id:
+    | '__root__'
+    | '/'
+    | '/livreur'
+    | '/login'
+    | '/register'
+    | '/livreur/badge'
+    | '/livreur/livraisons'
+    | '/livreur/stock'
+    | '/livreur/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LivreurRouteRoute: typeof LivreurRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
 }
@@ -75,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/livreur': {
+      id: '/livreur'
+      path: '/livreur'
+      fullPath: '/livreur'
+      preLoaderRoute: typeof LivreurRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,11 +158,58 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/livreur/': {
+      id: '/livreur/'
+      path: '/'
+      fullPath: '/livreur/'
+      preLoaderRoute: typeof LivreurIndexRouteImport
+      parentRoute: typeof LivreurRouteRoute
+    }
+    '/livreur/stock': {
+      id: '/livreur/stock'
+      path: '/stock'
+      fullPath: '/livreur/stock'
+      preLoaderRoute: typeof LivreurStockRouteImport
+      parentRoute: typeof LivreurRouteRoute
+    }
+    '/livreur/livraisons': {
+      id: '/livreur/livraisons'
+      path: '/livraisons'
+      fullPath: '/livreur/livraisons'
+      preLoaderRoute: typeof LivreurLivraisonsRouteImport
+      parentRoute: typeof LivreurRouteRoute
+    }
+    '/livreur/badge': {
+      id: '/livreur/badge'
+      path: '/badge'
+      fullPath: '/livreur/badge'
+      preLoaderRoute: typeof LivreurBadgeRouteImport
+      parentRoute: typeof LivreurRouteRoute
+    }
   }
 }
 
+interface LivreurRouteRouteChildren {
+  LivreurBadgeRoute: typeof LivreurBadgeRoute
+  LivreurLivraisonsRoute: typeof LivreurLivraisonsRoute
+  LivreurStockRoute: typeof LivreurStockRoute
+  LivreurIndexRoute: typeof LivreurIndexRoute
+}
+
+const LivreurRouteRouteChildren: LivreurRouteRouteChildren = {
+  LivreurBadgeRoute: LivreurBadgeRoute,
+  LivreurLivraisonsRoute: LivreurLivraisonsRoute,
+  LivreurStockRoute: LivreurStockRoute,
+  LivreurIndexRoute: LivreurIndexRoute,
+}
+
+const LivreurRouteRouteWithChildren = LivreurRouteRoute._addFileChildren(
+  LivreurRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LivreurRouteRoute: LivreurRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
 }
