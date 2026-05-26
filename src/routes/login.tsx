@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 import { SUPABASE_PROJECT_ID, SUPABASE_URL, getSupabaseEnvError } from "@/integrations/supabase/env";
 
 export const Route = createFileRoute("/login")({ component: Login });
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/login")({ component: Login });
 function Login() {
   const [badge, setBadge] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
   const { loading: authLoading, session, role, refresh } = useAuth();
@@ -79,13 +81,7 @@ function Login() {
           </div>
         )}
 
-        {import.meta.env.DEV && (
-          <p className="mb-4 text-center text-xs text-muted-foreground break-all">
-            Projet : {SUPABASE_PROJECT_ID}
-            <br />
-            {SUPABASE_URL ?? "(URL non chargée)"}
-          </p>
-        )}
+
 
         <form onSubmit={onSubmit} className="space-y-4">
           <div>
@@ -101,14 +97,25 @@ function Login() {
           </div>
           <div>
             <Label htmlFor="password">Mot de passe</Label>
-            <Input
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="pr-10"
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? "Cacher le mot de passe" : "Voir le mot de passe"}
+                onClick={() => setShowPassword((s) => !s)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
           <Button
             type="submit"
