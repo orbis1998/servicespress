@@ -100,6 +100,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          adresse: string | null
           badge_number: string
           created_at: string
           date_integration: string | null
@@ -111,6 +112,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          adresse?: string | null
           badge_number: string
           created_at?: string
           date_integration?: string | null
@@ -122,6 +124,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          adresse?: string | null
           badge_number?: string
           created_at?: string
           date_integration?: string | null

@@ -17,9 +17,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LivreurIndexRouteImport } from './routes/livreur/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as LivreurStockRouteImport } from './routes/livreur/stock'
+import { Route as LivreurProfilRouteImport } from './routes/livreur/profil'
 import { Route as LivreurLivraisonsRouteImport } from './routes/livreur/livraisons'
 import { Route as LivreurBadgeRouteImport } from './routes/livreur/badge'
 import { Route as AdminStockRouteImport } from './routes/admin/stock'
+import { Route as AdminPaieRouteImport } from './routes/admin/paie'
 import { Route as AdminLivreursRouteImport } from './routes/admin/livreurs'
 import { Route as AdminLivraisonsRouteImport } from './routes/admin/livraisons'
 
@@ -63,6 +65,11 @@ const LivreurStockRoute = LivreurStockRouteImport.update({
   path: '/stock',
   getParentRoute: () => LivreurRouteRoute,
 } as any)
+const LivreurProfilRoute = LivreurProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => LivreurRouteRoute,
+} as any)
 const LivreurLivraisonsRoute = LivreurLivraisonsRouteImport.update({
   id: '/livraisons',
   path: '/livraisons',
@@ -76,6 +83,11 @@ const LivreurBadgeRoute = LivreurBadgeRouteImport.update({
 const AdminStockRoute = AdminStockRouteImport.update({
   id: '/stock',
   path: '/stock',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminPaieRoute = AdminPaieRouteImport.update({
+  id: '/paie',
+  path: '/paie',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminLivreursRoute = AdminLivreursRouteImport.update({
@@ -97,9 +109,11 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/admin/livraisons': typeof AdminLivraisonsRoute
   '/admin/livreurs': typeof AdminLivreursRoute
+  '/admin/paie': typeof AdminPaieRoute
   '/admin/stock': typeof AdminStockRoute
   '/livreur/badge': typeof LivreurBadgeRoute
   '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/profil': typeof LivreurProfilRoute
   '/livreur/stock': typeof LivreurStockRoute
   '/admin/': typeof AdminIndexRoute
   '/livreur/': typeof LivreurIndexRoute
@@ -110,9 +124,11 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/admin/livraisons': typeof AdminLivraisonsRoute
   '/admin/livreurs': typeof AdminLivreursRoute
+  '/admin/paie': typeof AdminPaieRoute
   '/admin/stock': typeof AdminStockRoute
   '/livreur/badge': typeof LivreurBadgeRoute
   '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/profil': typeof LivreurProfilRoute
   '/livreur/stock': typeof LivreurStockRoute
   '/admin': typeof AdminIndexRoute
   '/livreur': typeof LivreurIndexRoute
@@ -126,9 +142,11 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/admin/livraisons': typeof AdminLivraisonsRoute
   '/admin/livreurs': typeof AdminLivreursRoute
+  '/admin/paie': typeof AdminPaieRoute
   '/admin/stock': typeof AdminStockRoute
   '/livreur/badge': typeof LivreurBadgeRoute
   '/livreur/livraisons': typeof LivreurLivraisonsRoute
+  '/livreur/profil': typeof LivreurProfilRoute
   '/livreur/stock': typeof LivreurStockRoute
   '/admin/': typeof AdminIndexRoute
   '/livreur/': typeof LivreurIndexRoute
@@ -143,9 +161,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/admin/livraisons'
     | '/admin/livreurs'
+    | '/admin/paie'
     | '/admin/stock'
     | '/livreur/badge'
     | '/livreur/livraisons'
+    | '/livreur/profil'
     | '/livreur/stock'
     | '/admin/'
     | '/livreur/'
@@ -156,9 +176,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/admin/livraisons'
     | '/admin/livreurs'
+    | '/admin/paie'
     | '/admin/stock'
     | '/livreur/badge'
     | '/livreur/livraisons'
+    | '/livreur/profil'
     | '/livreur/stock'
     | '/admin'
     | '/livreur'
@@ -171,9 +193,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/admin/livraisons'
     | '/admin/livreurs'
+    | '/admin/paie'
     | '/admin/stock'
     | '/livreur/badge'
     | '/livreur/livraisons'
+    | '/livreur/profil'
     | '/livreur/stock'
     | '/admin/'
     | '/livreur/'
@@ -245,6 +269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LivreurStockRouteImport
       parentRoute: typeof LivreurRouteRoute
     }
+    '/livreur/profil': {
+      id: '/livreur/profil'
+      path: '/profil'
+      fullPath: '/livreur/profil'
+      preLoaderRoute: typeof LivreurProfilRouteImport
+      parentRoute: typeof LivreurRouteRoute
+    }
     '/livreur/livraisons': {
       id: '/livreur/livraisons'
       path: '/livraisons'
@@ -264,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/stock'
       fullPath: '/admin/stock'
       preLoaderRoute: typeof AdminStockRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/paie': {
+      id: '/admin/paie'
+      path: '/paie'
+      fullPath: '/admin/paie'
+      preLoaderRoute: typeof AdminPaieRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/admin/livreurs': {
@@ -286,6 +324,7 @@ declare module '@tanstack/react-router' {
 interface AdminRouteRouteChildren {
   AdminLivraisonsRoute: typeof AdminLivraisonsRoute
   AdminLivreursRoute: typeof AdminLivreursRoute
+  AdminPaieRoute: typeof AdminPaieRoute
   AdminStockRoute: typeof AdminStockRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
@@ -293,6 +332,7 @@ interface AdminRouteRouteChildren {
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminLivraisonsRoute: AdminLivraisonsRoute,
   AdminLivreursRoute: AdminLivreursRoute,
+  AdminPaieRoute: AdminPaieRoute,
   AdminStockRoute: AdminStockRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
@@ -304,6 +344,7 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 interface LivreurRouteRouteChildren {
   LivreurBadgeRoute: typeof LivreurBadgeRoute
   LivreurLivraisonsRoute: typeof LivreurLivraisonsRoute
+  LivreurProfilRoute: typeof LivreurProfilRoute
   LivreurStockRoute: typeof LivreurStockRoute
   LivreurIndexRoute: typeof LivreurIndexRoute
 }
@@ -311,6 +352,7 @@ interface LivreurRouteRouteChildren {
 const LivreurRouteRouteChildren: LivreurRouteRouteChildren = {
   LivreurBadgeRoute: LivreurBadgeRoute,
   LivreurLivraisonsRoute: LivreurLivraisonsRoute,
+  LivreurProfilRoute: LivreurProfilRoute,
   LivreurStockRoute: LivreurStockRoute,
   LivreurIndexRoute: LivreurIndexRoute,
 }
