@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { signInWithBadge } from "@/lib/auth";
 import { Logo } from "@/components/Logo";
@@ -15,16 +15,11 @@ function Login() {
   const [badge, setBadge] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [hasUsers, setHasUsers] = useState<boolean | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) navigate({ to: "/" });
-    });
-    // Best-effort: check if at least one profile exists (RLS may block — that's fine)
-    supabase.from("profiles").select("id", { count: "exact", head: true }).then(({ count }) => {
-      setHasUsers((count ?? 0) > 0);
     });
   }, [navigate]);
 
@@ -49,8 +44,7 @@ function Login() {
         className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl"
       >
         <div className="flex flex-col items-center gap-2 mb-6">
-          <Logo className="h-16" />
-          <p className="text-sm italic text-muted-foreground">Your fast delivery service</p>
+          <Logo className="h-20" />
         </div>
 
         <form onSubmit={onSubmit} className="space-y-4">
@@ -59,7 +53,7 @@ function Login() {
             <Input
               id="badge"
               autoComplete="username"
-              placeholder="B-N02-JM"
+              placeholder="ADM-001"
               value={badge}
               onChange={(e) => setBadge(e.target.value)}
               required
@@ -84,12 +78,6 @@ function Login() {
             {loading ? "Connexion…" : "Se connecter"}
           </Button>
         </form>
-
-        {hasUsers === false && (
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Aucun compte. <Link to="/register" className="text-foreground underline font-medium">Créer le compte administrateur</Link>
-          </p>
-        )}
       </motion.div>
     </div>
   );
