@@ -5,11 +5,21 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { nitro } from "nitro/vite";
 
-// Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-// @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
+// Production: Nitro preset "vercel" (SSR + server functions on Vercel).
+// Dev: pas de plugin Cloudflare au build — cloudflare: false ci-dessous.
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
+  cloudflare: false,
+  plugins: [
+    nitro({
+      preset: "vercel",
+    }),
+  ],
+  // Wrapper Cloudflare (src/server.ts) : uniquement si build Worker local, pas sur Vercel
+  tanstackStart: process.env.VERCEL
+    ? {}
+    : {
+        server: { entry: "server" },
+      },
 });

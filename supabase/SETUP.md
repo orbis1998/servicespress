@@ -52,8 +52,29 @@ Connexion : http://localhost:8080/login avec le **badge** (ex. `ADM-001`) et le 
 
 Les livreurs sont créés uniquement par l’admin dans **Livreurs → Nouveau livreur** (pas d’inscription publique).
 
-## 6. Redémarrer l’app
+## 6. Redémarrer l’app (local)
 
 ```powershell
-npm.cmd run dev
+npm.cmd run dev:clean
 ```
+
+## 7. Déploiement Vercel
+
+Le build utilise **Nitro** (preset `vercel`), pas Cloudflare Workers.
+
+1. Importer le repo sur [Vercel](https://vercel.com)
+2. **Build Command** : `npm run build`
+3. **Variables d'environnement** (Production + Preview) :
+
+| Variable | Valeur |
+|----------|--------|
+| `VITE_SUPABASE_URL` | `https://hojhdavvqmejfkydousk.supabase.co` |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | clé anon Supabase |
+| `VITE_SUPABASE_PROJECT_ID` | `hojhdavvqmejfkydousk` |
+| `SUPABASE_URL` | même URL |
+| `SUPABASE_PUBLISHABLE_KEY` | même clé anon |
+| `SUPABASE_SERVICE_ROLE_KEY` | clé service_role (secret) |
+
+4. Redéployer après chaque changement de variables.
+
+Ne pas committer `.env` — utiliser le dashboard Vercel pour les secrets.
