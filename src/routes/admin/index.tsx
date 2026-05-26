@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Users, Package, Wallet, TrendingUp } from "lucide-react";
+import { ClientOnly } from "@/components/ClientOnly";
+import { RevenueBarChart } from "@/components/RevenueBarChart";
 
 export const Route = createFileRoute("/admin/")({ component: AdminDashboard });
 
@@ -113,18 +114,11 @@ function AdminDashboard() {
       <Card>
         <CardHeader><CardTitle className="text-base">Revenus 7 derniers jours</CardTitle></CardHeader>
         <CardContent>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chart}>
-                <XAxis dataKey="jour" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="USD" fill="oklch(0.86 0.18 95)" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="CDF" fill="oklch(0.15 0 0)" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <ClientOnly fallback={<div className="h-64 animate-pulse rounded-lg bg-muted" />}>
+            <div className="h-64">
+              <RevenueBarChart data={chart} showLegend />
+            </div>
+          </ClientOnly>
         </CardContent>
       </Card>
 

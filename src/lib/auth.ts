@@ -35,10 +35,24 @@ export async function signUpWithBadge(
 }
 
 export async function getCurrentRole(userId: string): Promise<"admin" | "livreur" | null> {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("user_roles")
     .select("role")
-    .eq("user_id", userId)
-    .maybeSingle();
-  return (data?.role as "admin" | "livreur" | null) ?? null;
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("[auth] getCurrentRole:", error.message);
+    return null;
+  }
+
+  const roles = (data ?? []).map((row) => row.role);
+  if (roles.includes("admin")) return "admin";
+  if (roles.includes("livreur")) return "livreur";
+  return null;
+}
+
+export function homePathForRole(role: "admin" | "livreur" | null): "/admin" | "/livreur" | "/login" {
+  if (role === "admin") return "/admin";
+  if (role === "livreur") return "/livreur";
+  return "/login";
 }
