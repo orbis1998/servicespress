@@ -75,6 +75,8 @@ Le build utilise **Nitro** (preset `vercel`), pas Cloudflare Workers.
 | `SUPABASE_PUBLISHABLE_KEY` | même clé anon |
 | `SUPABASE_SERVICE_ROLE_KEY` | clé service_role (secret) |
 
+> Important : les variables `VITE_*` sont nécessaires côté client pour que la page de login et l’authentification fonctionnent. Les variables `SUPABASE_*` sont utilisées côté serveur par les fonctions et l’admin Supabase.
+
 4. Redéployer après chaque changement de variables.
 
 Ne pas committer `.env` — utiliser le dashboard Vercel pour les secrets.
