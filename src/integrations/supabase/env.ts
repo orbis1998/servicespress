@@ -5,12 +5,13 @@ export const SUPABASE_PROJECT_ID =
 export const SUPABASE_URL =
   (import.meta.env.VITE_SUPABASE_URL as string | undefined) ??
   `https://${SUPABASE_PROJECT_ID}.supabase.co`;
-export const SUPABASE_PUBLISHABLE_KEY = import.meta.env
-  .VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+export const SUPABASE_PUBLISHABLE_KEY =
+  (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ??
+  (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined);
 
 export function getSupabaseEnvError(): string | null {
   if (!SUPABASE_PUBLISHABLE_KEY) {
-    return "Variable VITE_SUPABASE_PUBLISHABLE_KEY manquante. Vérifiez les variables Vercel.";
+    return "Variable VITE_SUPABASE_PUBLISHABLE_KEY ou VITE_SUPABASE_ANON_KEY manquante. Vérifiez les variables Vercel.";
   }
   if (!SUPABASE_URL) {
     return "Variable VITE_SUPABASE_URL manquante. Vérifiez les variables Vercel.";
