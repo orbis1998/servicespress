@@ -19,7 +19,11 @@ export type Database = {
           adresse: string | null
           client: string
           created_at: string
+          cdf_received: number
+          commission_cdf: number
+          commission_usd: number
           devise: string
+          exchange_rate: number
           frais_livraison: number
           id: string
           livreur_id: string
@@ -29,12 +33,19 @@ export type Database = {
           produit: string
           quantite: number
           statut: string
+          total_received_cdf: number
+          total_received_usd: number
+          usd_received: number
         }
         Insert: {
           adresse?: string | null
           client: string
           created_at?: string
+          cdf_received?: number
+          commission_cdf?: number
+          commission_usd?: number
           devise?: string
+          exchange_rate?: number
           frais_livraison?: number
           id?: string
           livreur_id: string
@@ -44,12 +55,19 @@ export type Database = {
           produit: string
           quantite?: number
           statut?: string
+          total_received_cdf?: number
+          total_received_usd?: number
+          usd_received?: number
         }
         Update: {
           adresse?: string | null
           client?: string
           created_at?: string
+          cdf_received?: number
+          commission_cdf?: number
+          commission_usd?: number
           devise?: string
+          exchange_rate?: number
           frais_livraison?: number
           id?: string
           livreur_id?: string
@@ -59,6 +77,9 @@ export type Database = {
           produit?: string
           quantite?: number
           statut?: string
+          total_received_cdf?: number
+          total_received_usd?: number
+          usd_received?: number
         }
         Relationships: []
       }

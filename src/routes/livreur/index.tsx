@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { motion } from "framer-motion";
 import { DollarSign, Package, TrendingUp, Calendar } from "lucide-react";
 import { ClientOnly } from "@/components/ClientOnly";
@@ -10,10 +9,21 @@ import { RevenueBarChart } from "@/components/RevenueBarChart";
 
 export const Route = createFileRoute("/livreur/")({ component: LivreurDashboard });
 
-type Delivery = { id: string; prix: number; frais_livraison: number; devise: string; statut: string; created_at: string };
+type Delivery = {
+  id: string;
+  prix: number;
+  frais_livraison: number;
+  devise: string;
+  statut: string;
+  created_at: string;
+  usd_received?: number | null;
+  cdf_received?: number | null;
+  exchange_rate?: number | null;
+  commission_usd?: number | null;
+  commission_cdf?: number | null;
+};
 
 const PERIOD_DAYS = 12; // cycle de paie 12 jours (dimanche off)
-const QUOTA_USD = 100;
 
 function LivreurDashboard() {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
@@ -26,7 +36,7 @@ function LivreurDashboard() {
       const { data: p } = await supabase.from("profiles").select("full_name,badge_number").eq("id", user.id).maybeSingle();
       setProfile(p);
       const { data } = await supabase.from("deliveries")
-        .select("id,prix,frais_livraison,devise,statut,created_at")
+        .select("id,prix,frais_livraison,devise,statut,created_at,usd_received,cdf_received,exchange_rate,commission_usd,commission_cdf")
         .eq("livreur_id", user.id).order("created_at", { ascending: false });
       setDeliveries(data ?? []);
     })();
@@ -37,23 +47,26 @@ function LivreurDashboard() {
   const startWeek = new Date(now); startWeek.setDate(now.getDate() - 7);
   const startPeriod = new Date(now); startPeriod.setDate(now.getDate() - PERIOD_DAYS);
 
-  const sum = (list: Delivery[], devise: string) =>
-    list.filter((d) => d.devise === devise).reduce((a, b) => a + Number(b.prix) + Number(b.frais_livraison), 0);
+  const receivedUsd = (d: Delivery) =>
+    Number(d.usd_received ?? (d.devise === "USD" ? d.prix + d.frais_livraison : 0));
+  const receivedCdf = (d: Delivery) =>
+    Number(d.cdf_received ?? (d.devise === "CDF" ? d.prix + d.frais_livraison : 0));
+  const commissionUsdValue = (d: Delivery) => Number(d.commission_usd ?? receivedUsd(d) * 0.1);
+  const commissionCdfValue = (d: Delivery) => Number(d.commission_cdf ?? receivedCdf(d) * 0.1);
 
   const today = deliveries.filter((d) => new Date(d.created_at) >= startToday);
   const week = deliveries.filter((d) => new Date(d.created_at) >= startWeek);
   const period = deliveries.filter((d) => new Date(d.created_at) >= startPeriod);
 
-  const usdDay = sum(today, "USD");
-  const cdfDay = sum(today, "CDF");
-  const usdWeek = sum(week, "USD");
-  const cdfWeek = sum(week, "CDF");
-  const usdPeriod = sum(period, "USD");
-  const cdfPeriod = sum(period, "CDF");
+  const usdDay = today.reduce((sum, d) => sum + receivedUsd(d), 0);
+  const cdfDay = today.reduce((sum, d) => sum + receivedCdf(d), 0);
+  const usdWeek = week.reduce((sum, d) => sum + receivedUsd(d), 0);
+  const cdfWeek = week.reduce((sum, d) => sum + receivedCdf(d), 0);
+  const usdPeriod = period.reduce((sum, d) => sum + receivedUsd(d), 0);
+  const cdfPeriod = period.reduce((sum, d) => sum + receivedCdf(d), 0);
 
-  const commissionUSD = usdPeriod * 0.1;
-  const commissionCDF = cdfPeriod * 0.1;
-  const quotaProgress = Math.min(100, (usdPeriod / QUOTA_USD) * 100);
+  const commissionUSD = period.reduce((sum, d) => sum + commissionUsdValue(d), 0);
+  const commissionCDF = period.reduce((sum, d) => sum + commissionCdfValue(d), 0);
 
   const chartData = Array.from({ length: 7 }).map((_, i) => {
     const d = new Date(); d.setDate(d.getDate() - (6 - i));
@@ -61,8 +74,8 @@ function LivreurDashboard() {
     const dd = deliveries.filter((dl) => dl.created_at.startsWith(day));
     return {
       jour: d.toLocaleDateString("fr", { weekday: "short" }),
-      USD: dd.filter((d) => d.devise === "USD").reduce((a, b) => a + Number(b.prix) + Number(b.frais_livraison), 0),
-      CDF: dd.filter((d) => d.devise === "CDF").reduce((a, b) => a + Number(b.prix) + Number(b.frais_livraison), 0),
+      USD: dd.reduce((sum, delivery) => sum + receivedUsd(delivery), 0),
+      CDF: dd.reduce((sum, delivery) => sum + receivedCdf(delivery), 0),
     };
   });
 
@@ -84,13 +97,9 @@ function LivreurDashboard() {
       </div>
 
       <Card>
-        <CardHeader><CardTitle className="text-base">Quota période ({PERIOD_DAYS}j — dimanche off)</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">Période {PERIOD_DAYS} jours</CardTitle></CardHeader>
         <CardContent>
-          <div className="flex justify-between text-sm mb-2">
-            <span>${usdPeriod.toFixed(2)} / ${QUOTA_USD}</span>
-            <span className="font-semibold">{quotaProgress.toFixed(0)}%</span>
-          </div>
-          <Progress value={quotaProgress} className="h-3" />
+          <div className="text-sm text-muted-foreground">Suivi des recettes sur 12 jours sans plafond.</div>
         </CardContent>
       </Card>
 
