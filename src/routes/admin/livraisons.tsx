@@ -78,15 +78,15 @@ function AdminLivraisons() {
       <div className="space-y-2">
         <h1 className="text-2xl font-bold">Toutes les livraisons</h1>
         <div className="grid gap-3 md:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-card p-4">
+          <div className="rounded-2xl border border-gray-200 bg-card p-4">
             <div className="text-xs text-muted-foreground">Total USD</div>
             <div className="mt-1 text-xl font-semibold">${totals.totalUsd.toFixed(2)}</div>
           </div>
-          <div className="rounded-2xl border border-muted/50 bg-card p-4">
+          <div className="rounded-2xl border border-gray-200 bg-card p-4">
             <div className="text-xs text-muted-foreground">Total CDF</div>
             <div className="mt-1 text-xl font-semibold">{totals.totalCdf.toLocaleString()} FC</div>
           </div>
-          <div className="rounded-2xl border border-muted/50 bg-card p-4">
+          <div className="rounded-2xl border border-gray-200 bg-card p-4">
             <div className="text-xs text-muted-foreground">Total général USD</div>
             <div className="mt-1 text-xl font-semibold">${totals.totalGeneralUsd.toFixed(2)}</div>
           </div>
@@ -114,16 +114,16 @@ function AdminLivraisons() {
                 </div>
 
                 <div className="grid gap-3 md:grid-cols-3">
-                  <div className="rounded-xl border border-white/6 bg-card p-3">
-                    <div className="text-xs text-slate-400">Reçu USD</div>
+                  <div className="rounded-xl border border-gray-200 bg-card p-3">
+                    <div className="text-xs text-muted-foreground">Reçu USD</div>
                     <div className="font-semibold">${Number(d.usd_received ?? 0).toFixed(2)}</div>
                   </div>
-                  <div className="rounded-xl border border-white/6 bg-card p-3">
-                    <div className="text-xs text-slate-400">Reçu CDF</div>
+                  <div className="rounded-xl border border-gray-200 bg-card p-3">
+                    <div className="text-xs text-muted-foreground">Reçu CDF</div>
                     <div className="font-semibold">{Number(d.cdf_received ?? 0).toLocaleString()} FC</div>
                   </div>
-                  <div className="rounded-xl border border-white/6 bg-card p-3">
-                    <div className="text-xs text-slate-400">Total général USD</div>
+                  <div className="rounded-xl border border-gray-200 bg-card p-3">
+                    <div className="text-xs text-muted-foreground">Total général USD</div>
                     <div className="font-semibold">${generalTotalUsd.toFixed(2)}</div>
                   </div>
                 </div>
@@ -137,8 +137,8 @@ function AdminLivraisons() {
                     <div className="text-xs">Commission CDF</div>
                     <div className="font-semibold">{Number(d.commission_cdf ?? 0).toLocaleString()} FC</div>
                   </div>
-                  <div className="rounded-xl border border-white/10 bg-card p-3">
-                    <div className="text-xs text-slate-400">Taux de change</div>
+                  <div className="rounded-xl border border-gray-200 bg-card p-3">
+                    <div className="text-xs text-muted-foreground">Taux de change</div>
                     <div className="font-semibold">{Number(d.exchange_rate ?? 0).toLocaleString()} CDF / USD</div>
                   </div>
                 </div>
@@ -147,7 +147,7 @@ function AdminLivraisons() {
                   <div>Mode de paiement: {d.mode_paiement ?? "—"}</div>
                   <div>Devise facturée: {d.devise}</div>
                 </div>
-                {d.observation && <div className="rounded-xl border border-white/6 bg-card p-3 text-sm text-slate-400">Observation: {d.observation}</div>}
+                {d.observation && <div className="rounded-xl border border-gray-200 bg-card p-3 text-sm text-muted-foreground">Observation: {d.observation}</div>}
               </CardContent>
             </Card>
           );

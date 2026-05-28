@@ -186,7 +186,7 @@ function Livraisons() {
                         <p className="text-sm text-muted-foreground">Total perçu</p>
                         <p className="mt-1 text-xl font-semibold">${usdReceived.toFixed(2)} + {cdfReceived.toLocaleString()} FC</p>
                       </div>
-                      <div className="rounded-2xl bg-black px-3 py-2 text-sm font-semibold text-white">Commission 10%</div>
+                      <div className="rounded-2xl bg-[var(--brand-yellow)] px-3 py-2 text-sm font-semibold text-black">Commission 10%</div>
                     </div>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       <div className="rounded-2xl bg-white/90 p-3 shadow-sm">

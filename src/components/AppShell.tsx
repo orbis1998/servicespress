@@ -37,13 +37,13 @@ export function AppShell({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/95 backdrop-blur-xl">
+    <div className="min-h-screen bg-white text-[var(--brand-black)]">
+      <header className="sticky top-0 z-40 border-b bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4">
           <Link to={role === "admin" ? "/admin" : "/livreur"} className="flex items-center gap-3">
-            <Logo className="h-11 rounded-2xl bg-white/10 p-2" />
+            <Logo className="h-11 rounded-2xl p-0" />
             <div className="hidden md:block">
-              <p className="text-xs uppercase tracking-[0.24em] text-slate-400">ServicExpress</p>
+              <p className="text-xs uppercase tracking-[0.24em] text-gray-500">ServicExpress</p>
               <p className="text-sm font-semibold">Espace {role === "admin" ? "Admin" : "Livreur"}</p>
             </div>
           </Link>
@@ -52,10 +52,10 @@ export function AppShell({
             <span className="hidden sm:inline-flex items-center rounded-full bg-[var(--brand-yellow)] px-3 py-1 text-xs font-semibold text-black">
               {role === "admin" ? "Admin" : "Livreur"}
             </span>
-            <Button variant="ghost" size="icon" onClick={logout} className="text-slate-100 hover:bg-white/10">
+            <Button variant="ghost" size="icon" onClick={logout} className="text-[var(--brand-black)]">
               <LogOut className="size-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="md:hidden text-slate-100 hover:bg-white/10" onClick={() => setOpen((o) => !o)}>
+            <Button variant="ghost" size="icon" className="md:hidden text-[var(--brand-black)]" onClick={() => setOpen((o) => !o)}>
               <Menu className="size-5" />
             </Button>
           </div>
@@ -63,17 +63,17 @@ export function AppShell({
       </header>
 
       <div className="mx-auto flex max-w-7xl">
-        <aside className="hidden xl:block w-72 shrink-0 border-r border-white/10 bg-slate-950/90 min-h-[calc(100vh-72px)] p-6">
-          <div className="mb-8 rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-            <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Tableau de bord</p>
-            <p className="mt-2 text-sm font-semibold text-white">Accès rapide aux sections clés</p>
+        <aside className="hidden xl:block w-72 shrink-0 border-r bg-white min-h-[calc(100vh-72px)] p-6">
+          <div className="mb-8 rounded-3xl border bg-white p-4">
+            <p className="text-xs uppercase tracking-[0.24em] text-gray-500">Tableau de bord</p>
+            <p className="mt-2 text-sm font-semibold text-[var(--brand-black)]">Accès rapide aux sections clés</p>
           </div>
           <nav className="space-y-2">
             {items.map((it) => (
               <Link key={it.to} to={it.to}
-                className="group flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
+                className="group flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium text-[var(--brand-black)] transition hover:bg-gray-50"
                 activeProps={{ className: "active" }}>
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-200 transition group-hover:bg-[var(--brand-yellow)] group-hover:text-black">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gray-100 text-[var(--brand-black)] transition group-hover:bg-[var(--brand-yellow)] group-hover:text-black">
                   {it.icon}
                 </span>
                 <span className="truncate">{it.label}</span>
@@ -83,14 +83,14 @@ export function AppShell({
         </aside>
 
         {open && (
-          <div className="md:hidden fixed inset-0 z-30 bg-black/50" onClick={() => setOpen(false)}>
-            <aside className="absolute left-0 top-[72px] w-72 bg-slate-950/95 border-r border-white/10 h-full p-5" onClick={(e) => e.stopPropagation()}>
+          <div className="md:hidden fixed inset-0 z-30 bg-black/20" onClick={() => setOpen(false)}>
+            <aside className="absolute left-0 top-[72px] w-72 bg-white border-r h-full p-5" onClick={(e) => e.stopPropagation()}>
               <nav className="space-y-2">
                 {items.map((it) => (
                   <Link key={it.to} to={it.to} onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium text-[var(--brand-black)] hover:bg-gray-50"
                     activeProps={{ className: "active" }}>
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800 text-slate-200">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-gray-100 text-[var(--brand-black)]">
                       {it.icon}
                     </span>
                     <span>{it.label}</span>

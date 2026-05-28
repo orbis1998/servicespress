@@ -38,42 +38,43 @@
   --radius: 0.875rem;
   --brand-yellow: #f8d44c;
   --brand-black: #000000;
-  --background: #000000;
-  --foreground: #ffffff;
-  --card: #0b0b0b;
-  --card-foreground: #ffffff;
-  --popover: #0b0b0b;
-  --popover-foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
   --primary: var(--brand-yellow);
   --primary-foreground: #000000;
-  --secondary: #0b0b0b;
-  --secondary-foreground: #ffffff;
-  --muted: #4b4b4b;
-  --muted-foreground: #9aa3ad;
-  --accent: var(--brand-black);
-  --accent-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #000000;
+  --muted: #6b7280;
+  --muted-foreground: #9ca3af;
+  --accent: #f3f4f6;
+  --accent-foreground: #000000;
+  
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.06);
-  --input: #0b0b0b;
+  --border: #e6e7e9;
+  --input: #ffffff;
   --ring: var(--brand-yellow);
 }
 
 .dark {
   --background: #000000;
-  --foreground: #ffffff;
-  --card: #0b0b0b;
-  --card-foreground: #ffffff;
-  --popover: #0b0b0b;
-  --popover-foreground: #ffffff;
+  --foreground: #f8fafc;
+  --card: #000000;
+  --card-foreground: #f8fafc;
+  --popover: #000000;
+  --popover-foreground: #f8fafc;
   --primary: var(--brand-yellow);
   --primary-foreground: #000000;
-  --secondary: #0b0b0b;
-  --secondary-foreground: #ffffff;
-  --muted: #4b4b4b;
-  --muted-foreground: #9aa3ad;
-  --accent: var(--brand-black);
-  --accent-foreground: #ffffff;
+  --secondary: #000000;
+  --secondary-foreground: #f8fafc;
+  --muted: #475569;
+  --muted-foreground: #94a3b8;
+  --accent: #000000;
+  --accent-foreground: #f8fafc;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.06);
@@ -106,3 +107,25 @@
     font-family: inherit;
   }
 }
+
+/* Brand enforcement overrides: convert Tailwind 'slate' utilities to black/white variants
+   This ensures no bluish slate tones remain and the site uses only black, white, and yellow. */
+.bg-slate-950\/90 { background-color: rgba(0,0,0,0.9) !important; }
+.bg-slate-950\/80 { background-color: rgba(0,0,0,0.8) !important; }
+.bg-slate-950\/70 { background-color: rgba(0,0,0,0.7) !important; }
+.bg-slate-950\/5  { background-color: rgba(255,255,255,0.05) !important; }
+.bg-slate-900\/80 { background-color: rgba(0,0,0,0.8) !important; }
+.bg-slate-900     { background-color: rgba(0,0,0,0.85) !important; }
+.bg-slate-800     { background-color: rgba(0,0,0,0.75) !important; }
+
+.text-slate-400 { color: rgba(0,0,0,0.55) !important; }
+.text-slate-300 { color: rgba(0,0,0,0.45) !important; }
+.text-slate-100 { color: rgba(255,255,255,0.95) !important; }
+
+.border-slate-900, .border-slate-950 { border-color: rgba(0,0,0,0.6) !important; }
+
+.dark .text-slate-400 { color: rgba(255,255,255,0.58) !important; }
+.dark .text-slate-300 { color: rgba(255,255,255,0.45) !important; }
+.dark .bg-slate-950\/90 { background-color: rgba(0,0,0,0.9) !important; }
+.dark .bg-slate-950\/80 { background-color: rgba(0,0,0,0.8) !important; }
+

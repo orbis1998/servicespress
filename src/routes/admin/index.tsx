@@ -78,10 +78,10 @@ function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[2rem] border border-white/10 bg-slate-950/80 p-6 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.8)]">
+      <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-semibold text-white">Tableau de bord</h1>
-          <p className="text-sm text-slate-400">Cycle de paie : {PERIOD_DAYS} jours (dimanche off)</p>
+          <h1 className="text-3xl font-semibold text-foreground">Tableau de bord</h1>
+          <p className="text-sm text-muted-foreground">Cycle de paie : {PERIOD_DAYS} jours (dimanche off)</p>
         </div>
       </div>
 
@@ -98,52 +98,52 @@ function AdminDashboard() {
         <RevenueCard title={`Période ${PERIOD_DAYS}j`} usd={stats.usdPeriod} cdf={stats.cdfPeriod} highlight />
       </div>
 
-      <Card className="border-white/10 bg-slate-950/80">
+      <Card className="border-gray-200 bg-white">
         <CardHeader><CardTitle className="text-base flex items-center gap-2"><Wallet className="size-4" /> Commission à payer (10%)</CardTitle></CardHeader>
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="text-xs text-slate-400">USD</div>
-              <div className="mt-2 text-3xl font-semibold text-white">${(stats.usdPeriod * 0.1).toFixed(2)}</div>
+            <div className="rounded-3xl border border-gray-200 bg-gray-50 p-4">
+              <div className="text-xs text-muted-foreground">USD</div>
+              <div className="mt-2 text-3xl font-semibold text-foreground">${(stats.usdPeriod * 0.1).toFixed(2)}</div>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-              <div className="text-xs text-slate-400">CDF</div>
-              <div className="mt-2 text-3xl font-semibold text-white">{(stats.cdfPeriod * 0.1).toLocaleString()} FC</div>
+            <div className="rounded-3xl border border-gray-200 bg-gray-50 p-4">
+              <div className="text-xs text-muted-foreground">CDF</div>
+              <div className="mt-2 text-3xl font-semibold text-foreground">{(stats.cdfPeriod * 0.1).toLocaleString()} FC</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-white/10 bg-slate-950/80">
+      <Card className="border-gray-200 bg-white">
         <CardHeader><CardTitle className="text-base">Revenus 7 derniers jours</CardTitle></CardHeader>
         <CardContent>
-          <ClientOnly fallback={<div className="h-64 animate-pulse rounded-3xl bg-slate-900" />}>
-            <div className="h-64 rounded-3xl bg-slate-950/70 p-4">
+          <ClientOnly fallback={<div className="h-64 animate-pulse rounded-3xl bg-gray-200" />}>
+            <div className="h-64 rounded-3xl bg-gray-50 p-4">
               <RevenueBarChart data={chart} showLegend />
             </div>
           </ClientOnly>
         </CardContent>
       </Card>
 
-      <Card className="border-white/10 bg-slate-950/80">
+      <Card className="border-gray-200 bg-white">
         <CardHeader><CardTitle className="text-base">Top livreurs (période)</CardTitle></CardHeader>
         <CardContent>
           {topLivreurs.length === 0 ? (
-            <p className="text-sm text-slate-400">Aucune donnée</p>
+            <p className="text-sm text-muted-foreground">Aucune donnée</p>
           ) : (
             <div className="space-y-3">
               {topLivreurs.map((l, i) => (
-                <div key={l.id} className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-slate-900/80 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div key={l.id} className="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-4">
                     <div className="size-9 grid h-11 w-11 place-items-center rounded-full bg-[var(--brand-yellow)] text-black font-semibold">{i + 1}</div>
                     <div>
-                      <div className="font-semibold text-white">{l.profile?.full_name ?? "—"}</div>
-                      <div className="text-xs text-slate-400">{l.profile?.badge_number} · {l.count} livraisons</div>
+                      <div className="font-semibold text-foreground">{l.profile?.full_name ?? "—"}</div>
+                      <div className="text-xs text-muted-foreground">{l.profile?.badge_number} · {l.count} livraisons</div>
                     </div>
                   </div>
-                  <div className="text-right text-sm text-slate-300">
-                    <div className="font-semibold text-white">${l.usd.toFixed(2)}</div>
-                    <div className="text-xs text-slate-400">{l.cdf.toLocaleString()} FC</div>
+                  <div className="text-right text-sm text-foreground">
+                    <div className="font-semibold text-foreground">${l.usd.toFixed(2)}</div>
+                    <div className="text-xs text-muted-foreground">{l.cdf.toLocaleString()} FC</div>
                   </div>
                 </div>
               ))}

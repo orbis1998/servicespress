@@ -11,8 +11,8 @@ const buttonVariants = cva(
       variant: {
         default: "bg-[var(--brand-yellow)] text-black shadow-sm hover:brightness-95",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border border-white/10 bg-transparent shadow-sm hover:bg-white/5",
-        secondary: "bg-black text-white border border-white/6 shadow-sm hover:bg-white/5",
+        outline: "border border-gray-200 bg-transparent shadow-sm hover:bg-gray-50",
+        secondary: "bg-white text-[var(--brand-black)] border border-gray-200 shadow-sm hover:bg-gray-50",
         ghost: "bg-transparent hover:bg-white/5 hover:text-white",
         link: "text-[var(--brand-yellow)] underline-offset-4 hover:underline",
       },

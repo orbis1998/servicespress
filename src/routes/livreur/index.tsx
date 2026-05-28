@@ -124,13 +124,13 @@ function LivreurDashboard() {
 
 function DualStat({ label, usd, cdf, icon, highlight }: { label: string; usd: number; cdf: number; icon: React.ReactNode; highlight?: boolean }) {
   return (
-    <motion.div whileHover={{ y: -2 }} className={`rounded-2xl border p-4 ${highlight ? "bg-black text-white" : "bg-card"}`}>
+    <motion.div whileHover={{ y: -2 }} className={`rounded-2xl border p-4 ${highlight ? "bg-[var(--brand-yellow)] text-black" : "bg-card"}`}>
       <div className="flex items-center justify-between">
-        <span className={`text-xs ${highlight ? "text-white/70" : "text-muted-foreground"}`}>{label}</span>
-        <span className={`inline-flex size-7 items-center justify-center rounded-full ${highlight ? "bg-[var(--brand-yellow)] text-black" : "bg-accent"}`}>{icon}</span>
+        <span className={`text-xs ${highlight ? "text-black/70" : "text-muted-foreground"}`}>{label}</span>
+        <span className={`inline-flex size-7 items-center justify-center rounded-full ${highlight ? "bg-black text-[var(--brand-yellow)]" : "bg-accent"}`}>{icon}</span>
       </div>
       <div className="mt-2 text-lg font-bold">${usd.toFixed(2)}</div>
-      <div className={`text-xs ${highlight ? "text-[var(--brand-yellow)]" : "text-foreground"} font-semibold`}>{cdf.toLocaleString()} FC</div>
+      <div className={`text-xs font-semibold ${highlight ? "text-black/70" : "text-foreground"}`}>{cdf.toLocaleString()} FC</div>
     </motion.div>
   );
 }
